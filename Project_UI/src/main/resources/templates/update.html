@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>의좋은 형제 글 수정하기</title>
+
+
+    <!-- Customized Bootstrap Style sheet -->
+    <link href="css/style.css" rel="stylesheet">
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.0.1/css/bootstrap.min.css" integrity="sha512-Ez0cGzNzHR1tYAv56860NLspgUGuQw16GiOOp/I2LuTmpSK9xDXlgJz3XN4cnpXWDmkNBKXR/VDMTCnAaEooxA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    
+       
+
+</head>
+<body>
+	
+  <div class="container-fluid bg-secondary mb-5">
+        <div class="d-flex flex-column align-items-center justify-content-center" style="min-height: 250px;">
+            <h1 class="font-weight-semi-bold text-uppercase mb-3" style="color:white;">상품 수정</h1>
+            <div class="d-inline-flex">
+               
+            </div>
+        </div>
+    </div>
+    <!-- Page Header End -->	
+	
+	<center>
+	
+	<form th:action="@{/update}" th:method="post" th:object="${update}">
+	 <div class="container-fluid pt-5">
+		  <div class="ol-md-6 form-group">
+		  <input type="text" value="상품 번호" readonly >
+		  <input type="text" th:field="*{item_id}" readonly="readonly">
+                            <label>카테고리</label>
+                   
+	                <select name="item_category" class="custom-select">
+		                <optgroup>
+		                    <option value="남성의류" th:field="*{item_category}" selected>남성의류</option>
+		                    <option value="여성의류" th:field="*{item_category}">여성의류</option>
+		                    <option value="아동의류" th:field="*{item_category}">아동의류</option>
+		                    <option value="신발" th:field="*{item_category}">신발</option>
+		                    <option value="가방" th:field="*{item_category}">가방</option>
+		                    <option value="액세서리" th:field="*{item_category}">액세서리</option>
+		                </optgroup>
+	                </select>
+          </div><br>
+		
+		
+		  <div class="col-md-6 form-group">
+                            <label>상품명</label>
+                            <input type="text" th:field="*{item_name}" class="form-control" style="width:60%;">
+                        </div>
+         <div class="col-md-6 form-group"><br>
+         <label>상품 상태</label><br>
+        <th:block th:each="status : ${T(Project_UI.model.Item_Status).values()}">
+        [[${status.description}]] <input type="radio" th:field="*{item_status}" th:value="${status}">
+        </th:block>  
+                        
+          <div class="col-md-6 form-group"><br>
+          <label class="col-md-6 form-group">가격(원)</label>
+          <input type="text" th:field="*{item_price}" class="form-control"> 
+          </div>
+          <div class="col-md-6 form-group">
+    <br><br>      
+  	<label>상품 설명</label>
+  	<textarea cols="50" rows="8" th:field="*{item_des}" class="form-control"></textarea>
+  	</div>
+  	
+	</div>
+	<br><br>
+   
+                <input type="submit" value="수정하기" class="btn btn-primary btn-block my-3">
+                <input type="button" value="취소" th:onclick="|location.href='/read/${update.item_id}'|" class="btn btn-warning btn-block my-3"> 
+  </center>
+	</form>
+
+</body>
+</html>

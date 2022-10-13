@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>마이페이지</title>
+<link href="css/style.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.0.1/css/bootstrap.min.css" integrity="sha512-Ez0cGzNzHR1tYAv56860NLspgUGuQw16GiOOp/I2LuTmpSK9xDXlgJz3XN4cnpXWDmkNBKXR/VDMTCnAaEooxA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+</head>
+<body>
+<br><br>
+	<center><h2 class="h3 mb-3 fw-normal" style="color: #383838;">마이페이지</h2></center>
+	<br><br><br><br>
+	
+
+	<div id="detail">
+	<h2 align="center">회원정보</h2><br>
+	<table th:object="${mypage}" class="table table-bordered text-center mb-0">
+        <tr>
+           <th>아이디</th>
+           <td>
+                <span th:text="*{member_id}"></span>
+            </td>
+        </tr>
+        <tr>
+            <th>닉네임</th>
+            <td>
+                <span th:text="*{member_nick}"></span>
+            </td>
+        </tr>
+        <tr>
+            <th>이름</th>
+            <td>
+                <span th:text="*{member_name}"></span>
+            </td>
+        </tr>
+        <tr>
+            <th>이메일</th>
+            <td>
+                <span th:text="*{email}"></span>
+            </td>
+        </tr>
+        
+        <tr>
+        	<th>판매수</th>
+        	<th:block th:if="${#lists.size(rating)}!=0">
+        	<td>
+					<span th:text="${#lists.size(rating)}"></span>
+			</td>
+			</th:block>
+			<th:block th:unless="${#lists.size(rating)}!=0">
+				<td>0</td>
+			</th:block>
+        </tr>
+        <tr>
+            <th>평점</th>
+            <th:block th:if="${#lists.size(rating)}!=0">
+				<td>
+					<span th:text="${#numbers.formatDecimal(#aggregates.sum(sellList.![rating])*1.0 / #lists.size(rating), 1, 1)}"></span>
+				</td>
+			</th:block>
+			<th:block th:unless="${#lists.size(rating)}!=0">
+				<td>평점이 없습니다.</td>
+			</th:block>
+        </tr>
+        
+    </table><br>
+    <div align="center">
+    <input type="button" value="목록으로" onclick="location.href='/'" class="btn btn-primary btn-block my-3" style="width: 15%;">
+    <input type="button" value="수정하기" th:onclick="|location.href='/updateMember/${mypage.member_idn}'|" class="btn btn-primary btn-block my-3" style="width: 15%;">
+    <input type="button" value="탈퇴하기" th:onclick="|location.href='/withdraw/${mypage.member_idn}'|" class="btn btn-danger btn-block my-3" style="width: 15%;" onsubmit="resign();"><br>
+    
+    </div>
+    
+    <div id="list">
+    	<br><br><br>
+    	<h2 align="center">판매내역</h2>
+    	<table class="table table-striped table-bordered table-dark" style="width:50%;" align="center">
+	    	<tr>
+	            <th>등록 번호</th>
+	            <th>이미지</th>
+	            <th>상품명</th>
+	            <th colspan="2">진행현황</th>
+	        </tr>
+    	<th:block th:if="${#lists.size(sellList)}!=0">
+			<tr th:each="sell, itemStat:${sellList}">
+				<th th:text="${itemStat.count}"></th>
+				<td><input type="button" value="이미지" th:onclick="|location.href='/read/${sell.item_id}'|"></td>
+				<td th:text="${sell.item_name}"></td>
+				<th:block th:if="${#strings.equals(sell.deal_status,'newitem')}">
+					<td>신상</td>
+				</th:block>
+				<th:block th:if="${#strings.equals(sell.deal_status,'reserved')}">
+					<td>거래중</td>
+				</th:block>
+				<th:block th:if="${#strings.equals(sell.deal_status,'soldout')}">
+					<td>거래완료</td>
+				</th:block>
+				<td><input type="button" value="상세보기" th:onclick="|location.href='/read/${sell.item_id}'|"></td>
+			</tr>
+		</th:block>
+		<th:block th:unless="${#lists.size(sellList)}!=0">
+				<tr>
+					<td colspan="5">등록된 상품이 없습니다.</td>
+				</tr>
+		</th:block>
+		</table>
+    </div>
+    
+    <div id="list">
+    <br><br>
+    	<h2 align="center">구매내역</h2>
+    	<table class="table table-striped table-bordered table-dark" style="width:50%;" align="center">
+	    	<tr>
+	            <th>번호</th>
+	            <th>이미지</th>
+	            <th>상품명</th>
+	            <th colspan="2">진행현황</th>
+	        </tr>
+    	<th:block th:if="${#lists.size(buyList)}!=0">
+			<tr th:each="buy, itemStat:${buyList}">
+				<th th:text="${itemStat.count}"></th>
+				<td><input type="button" value="이미지" th:onclick="|location.href='/read/${buy.item_id}'|"></td>
+				<td th:text="${buy.item_name}"></td>
+				<th:block th:if="${#strings.equals(buy.deal_status,'newitem')}">
+					<td>신상</td>
+				</th:block>
+				<th:block th:if="${#strings.equals(buy.deal_status,'reserved')}">
+					<td>거래중</td>
+				</th:block>
+				<th:block th:if="${#strings.equals(buy.deal_status,'soldout')}">
+					<td>거래완료</td>
+				</th:block>
+				<td><input type="button" value="상세보기" th:onclick="|location.href='/read/${buy.item_id}'|"></td>
+			</tr>
+		</th:block>
+		<th:block th:unless="${#lists.size(buyList)}!=0">
+				<tr>
+					<td colspan="5">등록된 상품이 없습니다.</td>
+				</tr>
+		</table>
+		</th:block>
+    </div>
+    
+</body>
+</html>

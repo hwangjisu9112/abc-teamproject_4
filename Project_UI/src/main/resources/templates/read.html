@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>의좋은 형제</title>
+
+
+    <!-- Customized Bootstrap Style sheet -->
+    <link href="css/style.css" rel="stylesheet">
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.0.1/css/bootstrap.min.css" integrity="sha512-Ez0cGzNzHR1tYAv56860NLspgUGuQw16GiOOp/I2LuTmpSK9xDXlgJz3XN4cnpXWDmkNBKXR/VDMTCnAaEooxA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    
+       
+</head>
+
+
+
+<body>
+
+
+         
+
+
+
+    <!-- Page Header Start -->
+    <div class="container-fluid bg-secondary mb-5">
+        <div class="d-flex flex-column align-items-center justify-content-center" style="min-height: 250px;">
+            <h1 class="font-weight-semi-bold text-uppercase mb-3" style="color:white;">상품 상세</h1>
+            <div class="d-inline-flex">
+              
+            </div>
+        </div>
+    </div>
+    <!-- Page Header End -->	    
+
+
+		
+        <table th:object="${read}" class="table table-bordered text-center mb-0" style="width:70%" align="center">
+            <tr>
+                <th>카테고리</th>
+                <td>
+                    <span th:text="*{item_category}"></span>
+                </td>
+            </tr>
+            <tr>
+                <th>상품명</th>
+                <td>
+                    <span th:text="*{item_name}"></span>
+                </td>
+            </tr>
+            <tr>
+                <th>판매자</th>
+                <td>
+                    <span th:text="*{seller_id}"></span>
+                </td>
+            </tr>
+            <tr>
+                <th>등록일</th>
+                <td>
+                    <span th:text="*{#temporals.format(item_inputdate,'yyyy년 MM월 dd일 HH:mm:ss')}"></span>
+                </td>
+            </tr>
+            <tr>
+                <th>수정일</th>
+                <td>
+                    <span th:text="*{#temporals.format(item_updatedate,'yyyy년 MM월 dd일 HH:mm:ss')}"></span>
+                </td>
+            </tr>
+            <tr>
+                <th>상품상태</th>
+                <td><span th:text="*{item_status.description}"></span></td>
+            </tr>
+            <tr>
+                <th>가격</th>
+                <td>
+                    <span th:text="*{item_price}"></span>원
+                </td>
+            </tr>
+            <tr>
+                <th>상품설명</th>
+                <td>
+                    <span th:text="*{item_des}"></span>
+                </td>
+            </tr>
+               <tr>
+                <th>거래 현황</th>
+                <td>
+                    <span th:text="*{deal_status.description}"></span>
+                </td>
+            </tr>
+        </table>
+      
+        
+        <br><br>
+      <center>
+      <input type="button" value="목록으로" onclick="location.href='/'" class="btn btn-primary btn-block my-3">
+        <th:block th:if="${read.seller_id == userInfo.username}">
+           <th:block th:unless="${#strings.equals(read.deal_status,'soldout')}">
+               <input type="button" value="수정하기" th:onclick="|location.href='/update/${read.item_id}'|" class="btn btn-primary btn-block my-3">
+               <input type="button" value="삭제하기" th:onclick="|location.href='/delete/${read.item_id}'|" class="btn btn-danger btn-block my-3">
+           </th:block>
+           <th:block th:if="${#strings.equals(read.deal_status,'soldout')}">
+              <h5>리뷰</h5>
+              작성자:<span th:text = "${read.buyer_id}"></span>
+              <p>
+                 <span th:text = "${read.review}"></span>
+              </p>
+           </th:block>
+        </th:block>
+        <th:block th:if="${read.buyer_id == userInfo.username}">
+           <th:block th:unless="${#strings.equals(read.deal_status,'soldout')}">
+               <input type="button" value="물품수령확인" th:onclick="|location.href='/review/${read.item_id}'|"  class="btn btn-primary btn-block my-3" style="width: 10%;">
+               <input type="button" value="구매취소" th:onclick="|location.href='/purchase_cancel/${read.item_id}'|"  class="btn btn-warning btn-block my-3" style="width: 10%;">
+           </th:block>
+           <th:block th:if="${#strings.equals(read.deal_status,'soldout')}">
+              <h5>리뷰</h5>
+              작성자:<span th:text = "${read.buyer_id}"></span>
+              <p>
+                 <span th:text = "${read.review}"></span>
+              </p>
+           </th:block>
+        </th:block>
+        <th:block th:unless="${read.buyer_id == userInfo.username} or ${read.seller_id == userInfo.username}">
+            <input type="button" value="관심상품등록" th:onclick="|location.href='/wish/${read.item_id}'|"  class="btn btn-primary btn-block my-3" style="width: 10%;">
+            <input type="button" value="구매신청" th:onclick="|location.href='/purchase/${read.item_id}'|"  class="btn btn-primary btn-block my-3" style="width: 10%;">
+        </th:block>
+       </center>
+</body>
+</html>
+
+
+

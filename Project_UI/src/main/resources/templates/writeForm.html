@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>상품등록</title>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <meta content="Free HTML Templates" name="keywords">
+    <meta content="Free HTML Templates" name="description">
+
+    <!-- Favicon -->
+    <link href="img/favicon.ico" rel="icon">
+
+    <!-- Google Web Fonts -->
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet"> 
+
+    <!-- Font Awesome -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
+
+    <!-- Libraries Stylesheet -->
+    <link href="lib/owlcarousel/assets/owl.carousel.min.css" rel="stylesheet">
+
+    <!-- Customized Bootstrap Stylesheet -->
+    <link href="css/style.css" rel="stylesheet">
+
+
+</head>
+<body>
+
+
+    <!-- Page Header Start -->
+    <div class="container-fluid bg-secondary mb-5">
+        <div class="d-flex flex-column align-items-center justify-content-center" style="min-height: 250px;">
+            <h1 class="font-weight-semi-bold text-uppercase mb-3">상품 등록</h1>
+            <div class="d-inline-flex">
+                <p class="m-0"><a href="/">Home</a></p>
+                <p class="m-0 px-2">-</p>
+                <p class="m-0">상품 등록</p>
+            </div>
+        </div>
+    </div>
+    <!-- Page Header End -->	
+    
+    
+	<center>
+	<form th:action="@{/writeForm}" th:method="post" th:object="${write}">
+	 <div class="container-fluid pt-5">
+		  <div class="col-md-6 form-group">
+                            <label>카테고리</label>
+                            <select name="item_category"  class="custom-select" >
+		                <optgroup>
+		                    <option value="남성의류" th:field="*{item_category}" selected>남성의류</option>
+		                    <option value="여성의류" th:field="*{item_category}">여성의류</option>
+		                    <option value="아동의류" th:field="*{item_category}">아동의류</option>
+		                    <option value="신발" th:field="*{item_category}">신발</option>
+		                    <option value="가방" th:field="*{item_category}">가방</option>
+		                    <option value="액세서리" th:field="*{item_category}">액세서리</option>
+		                </optgroup>
+	                </select>
+                        </div>
+		
+		  <div class="col-md-6 form-group">
+                            <label>상품명</label>
+                            <input type="text" th:field="*{item_name}" class="form-control">
+                        </div>
+         <div class="col-md-6 form-group">
+                            <label>상품 상태</label><br>
+                           <th:block th:each="status : ${T(Project_UI.model.Item_Status).values()}">
+                       [[${status.description}]] <input type="radio" th:field="*{item_status}" th:value="${status}" >
+                    </th:block>
+                        </div>     
+                        
+          <div class="col-md-6 form-group">
+                            <label>가격(원)</label>
+                            <input type="text" th:field="*{item_price}" class="form-control">
+                        </div> 
+          <div class="col-md-6 form-group">
+  <label>상품 설명</label>
+  <textarea cols="50" rows="8" th:field="*{item_des}" class="form-control"></textarea>
+  </div>
+		</div>
+    <input type="submit" value="등록하기" class="btn btn-lg btn-block btn-primary font-weight-bold my-3 py-3" style="width:50%;">
+		
+	</form>
+	</center>
+</body>
+</html>

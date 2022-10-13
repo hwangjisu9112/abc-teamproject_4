@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>의좋은 형제 회원가입</title>
+
+<link href="css/style.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.0.1/css/bootstrap.min.css" integrity="sha512-Ez0cGzNzHR1tYAv56860NLspgUGuQw16GiOOp/I2LuTmpSK9xDXlgJz3XN4cnpXWDmkNBKXR/VDMTCnAaEooxA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    
+</head>
+<body>
+
+	<br><br>
+	<center><h2 class="h3 mb-3 fw-normal" style="color  : #383838;">회원가입</h2></center>
+
+	
+        <form th:action="@{/joinForm}" th:object="${join}" th:method="post">
+            <br><br>
+            <center>
+            <table  class="table table-bordered text-center mb-0" style="width: 50%;">
+                <tr>
+                    <th>아이디</th>
+                    <td>
+                        <input type="text" th:field="*{member_id}">
+                    </td>
+                </tr>
+                <tr>
+                    <th>닉네임</th>
+                    <td>
+                        <input type="text" th:field="*{member_nick}">
+                    </td>
+                </tr>
+                <tr>
+                    <th>패스워드</th>
+                    <td>
+                        <input type="password" th:field="*{member_pw}">
+                    </td>
+                </tr>
+                <tr>
+                    <th>패스워드 확인</th>
+                    <td>
+                        <input type="password">
+                    </td>
+                </tr>
+                <tr>
+                    <th>이름</th>
+                    <td>
+                        <input type="text" th:field="*{member_name}">
+                    </td>
+                </tr>
+                <tr>
+                    <th>이메일</th>
+                    <td><input type="email" th:field="*{email}"></td>
+                </tr>
+            </table>
+            </center><br><br>
+            <center>           
+            <p>
+                <input type="submit" value="가입하기" class="btn btn-primary btn-block my-3" style="width: 15%;">
+                <input type="button" value="취소" onclick="location.href='/'" class="btn btn-primary btn-block my-3" style="width: 15%;">
+            </p>
+            </center>
+            
+        </form>
+        
+</body>
+</html>

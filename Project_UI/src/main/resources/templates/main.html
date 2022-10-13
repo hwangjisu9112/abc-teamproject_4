@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	  xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+<meta charset="UTF-8">
+<title>의좋은 형제</title>
+
+
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <meta content="Free HTML Templates" name="keywords">
+    <meta content="Free HTML Templates" name="description">
+
+    <!-- Favicon -->
+    <link href="img/favicon.ico" rel="icon">
+
+    <!-- Google Web Fonts -->
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet"> 
+
+    <!-- Font Awesome -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
+
+    <!-- Libraries Stylesheet -->
+    <link href="lib/owlcarousel/assets/owl.carousel.min.css" rel="stylesheet">
+
+    <!-- Customized Bootstrap Stylesheet -->
+    <link href="css/style.css" rel="stylesheet">
+    
+
+</head>
+<body>
+	
+    <!-- Navbar Start -->
+    
+            <div class="col-lg-9">
+                <nav class="navbar navbar-expand-lg bg-light navbar-light py-3 py-lg-0 px-0">
+                    <a href="/" class="text-decoration-none d-block d-lg-none">
+                        <h1 class="m-0 display-5 font-weight-semi-bold"><span class="text-primary font-weight-bold border px-3 mr-1">E</span><bold>의좋은 형제</bold></h1>
+                    </a>
+                    <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbarCollapse">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+                    <div class="collapse navbar-collapse justify-content-between" id="navbarCollapse">
+                        <div class="navbar-nav mr-auto py-0">
+                            <a href="/" class="nav-item nav-link active">Home</a>
+                          
+                                <a href="/result" class="nav-item nav-link active">Pages</a>
+                            
+                            </div>
+                          
+                        </div>
+                        
+                        
+                        
+                        <div class="navbar-nav ml-auto py-0">
+                        <th:block sec:authorize="isAnonymous()">
+                            <a th:href="@{/login}" class="nav-item nav-link" style="float:right;">로그인</a>
+                            <a th:href="@{/joinForm}" class="nav-item nav-link" style="float:right;">회원가입</a>
+                        </th:block>
+                        	<th:block sec:authorize="isAuthenticated()" >
+				<span><a th:href="@{/mypage}" class="nav-item nav-link">마이페이지</a></span>
+				<span><a th:href="@{/logout}" class="nav-item nav-link">로그아웃</a></span>
+				
+		</th:block>
+						
+                        </div>
+                    </div>
+                
+                </nav>
+               
+             <!-- Navbar Start -->
+ 
+    <div class="container-fluid mb-5" style="width:2500px">
+        <div class="row border-top px-xl-5">
+     
+            <div class="col-lg-9">
+                <nav class="navbar navbar-expand-lg bg-light navbar-light py-3 py-lg-0 px-0">
+                    <a href="" class="text-decoration-none d-block d-lg-none">
+                        <h3 class="m-0 display-5 font-weight-semi-bold"><span class="text-primary font-weight-bold border px-3 mr-1">E</span>의좋은 형제</h3>
+                    </a>
+                    <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbarCollapse">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+                    <div class="collapse navbar-collapse justify-content-between" id="navbarCollapse">
+                        
+                </nav>
+                <div id="header-carousel" class="carousel slide" data-ride="carousel">
+                    <div class="carousel-inner">
+                        <div class="carousel-item active" style="height: 450px;">
+                            <img src="img/goodbros.jpg" alt="">
+                            <div class="carousel-caption d-flex flex-column align-items-center justify-content-center">
+                                <div class="p-3">
+                                    <h4 class="text-light text-uppercase font-weight-medium mb-3">의좋은 형제</h4>
+                                    <h3 class="display-4 text-white font-weight-semi-bold mb-4">안심하고 거래하세요</h3>
+                                    <a href="writeForm" class="btn btn-light py-2 px-3">지금 판매하기</a>
+                                </div>
+                            </div>
+                        </div>
+                      
+                    </div>
+                  
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    
+    <!--  -->
+    
+    
+    
+    <!-- Navbar End -->
+	
+	  <div class="container-fluid pt-5">
+        <div class="text-center mb-4">
+            <h2 class="section-title px-5"><span class="px-2">Search</span></h2>
+        </div>
+	
+
+			
+			<table align="center">
+			<th style="width: 150px;">  
+			<div id="header" >
+			<form th:action="@{/result}" method="get">
+			<select id="category" class="custom-select" >
+				<option value="" th:selected="${item_category}=='전체'" >전체</option>
+				<option value="남성의류"  th:selected="${item_category}=='남성의류'">남성의류</option>
+				<option value="여성의류"  th:selected="${item_category}=='여성의류'">여성의류</option>
+				<option value="아동의류"  th:selected="${item_category}=='아동의류'">아동의류</option>
+				<option value="신발"  th:selected="${item_category}=='신발'">신발</option>
+				<option value="가방" th:selected="${item_category}=='가방'">가방</option>
+				<option value="액세서리" th:selected="${item_category}=='액세서리'">액세서리</option>
+			</select>
+			</th>
+			<td style="width: 600px;">
+			<input type="text" id="search" th:value="${searchWord}" class="form-control" placeholder="Search for products" style="width:60%;" align="center"></th>
+			<td style="width: 100px;"><input type="submit" id="search" value="검색"  class="btn btn-light py-2 px-3"></td>
+			<td style="width: 100px;"><input type="button" value="상품등록" onclick="location.href='/writeForm'"class="btn btn-light py-2 px-3"></span></td>
+			</table>
+			<span>
+			</form>
+		
+	</div>
+	
+ <!-- Products Start -->
+ <div id="list">
+		<th:block th:if="${list}">
+ 
+    <div class="container-fluid pt-5">
+        <div class="text-center mb-4">
+            <h2 class="section-title px-5"><span class="px-2">ON SALE</span></h2>
+        </div>
+        
+      
+   
+	<!-- 데이터랑 연결 -->
+	
+	<div id="list">
+		<th:block th:if="${list}">
+		<center>
+		
+	
+	
+			<table class="table table-bordered text-center mb-0" style="width:70%;">
+				<thead class="bg-secondary text-dark">
+				<tr>
+				<th>No. </th>
+				<th>이미지(상세보기)</th>
+				<th>분류</th>
+				<th>상품명</th>
+				<th>가격(￦)</th>
+				<th>상태</th>
+			
+				<th>등록일</th>
+			
+				</tr>
+				</thead>
+				<tbody  class="align-middle">
+				<tr th:each="item, itemStat:${list}">
+					<td th:text="${item.item_id}" class="align-middle"></td>
+				<!--	<td><input type="button" value="이미지" th:onclick="|location.href='/read/${item.item_id}'|" class="btn btn-light py-2 px-3"></td>  -->
+					<td><input type="button" value="이미지" th:onclick="|location.href='/read/${item.item_id}'|" class="btn btn-light py-2 px-3"></td>
+					<td th:text="${item.item_category}" class="align-middle"></td>
+					<td th:text="${item.item_name}" class="align-middle" style="font-weight : bold;"></td>
+					<td th:text="${item.item_price}" class="align-middle"></td>
+					<td th:text="${item.item_status.description}" class="align-middle" style="font-weight : bold;"></td>
+					<td th:text="*{#temporals.format(item.item_inputdate,'yyyy년 MM월 dd일 HH:mm:ss')}" class="align-middle"></td>
+				
+					
+				</tr>
+				</tbody>
+			</table>
+		</center>	
+		</th:block>
+	
+	
+	
+		<th:block th:unless="${list}">
+			<table>
+				<tr>
+					<td colspan="3">등록된 상품이 없습니다.</td>
+				</tr>
+			</table>
+		</th:block>
+	</div>
+	
+	
+	
+
+	
+	<!--  FOOTER -->
+	
+	  <div class="container-fluid bg-secondary text-dark mt-5 pt-5" style="width:1800px;">
+        <div class="row px-xl-5 pt-5">
+            <div class="col-lg-4 col-md-12 mb-5 pr-3 pr-xl-5">
+                <a href="" class="text-decoration-none">
+                    <h1 class="mb-4 display-5 font-weight-semi-bold"><span class="text-primary font-weight-bold border border-white px-3 mr-1">E</span>의좋은 형제</h1>
+                </a>
+                <p style="width:1800px;">COPYRIGHT (C) 의좋은 형제닷컴 ALL RIGHTS RESERVED.
+                의좋은 형제닷컴 내 매거진, 스트리트스냅, 스토어 등 의좋은 형제 자체 생성 콘텐츠는 의좋은 형제닷컴 및 의좋은 형제 계약업체에 저작권이 있습니다.
+                </p>
+                <p class="mb-2"><i class="fa fa-map-marker-alt text-primary mr-3"></i>중앙동, 부산, 대한민국</p>
+                <p class="mb-2"><i class="fa fa-envelope text-primary mr-3"></i>info@example.com</p>
+                <p class="mb-0"><i class="fa fa-phone-alt text-primary mr-3"></i>+012 345 67890</p>
+            </div>
+            <div class="col-lg-8 col-md-12">
+                <div class="row">
+                    <div class="col-md-4 mb-5">
+                            <div class="col-md-4 mb-5">
+                     
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row border-top border-light mx-xl-5 py-4">
+            <div class="col-md-6 px-xl-0">
+            <div>
+                <p class="mb-md-0 text-center text-md-left text-dark" style="width:900px;">
+                 의좋은 형제. All Rights Reserved. Designed by HTML Codex Distributed By Hwang hyunwoong
+                </p>
+             </div>
+            </div>
+            <div class="col-md-6 px-xl-0 text-center text-md-right">
+                <img class="img-fluid" src="/img/payments.png" alt="">
+            </div>
+        </div>
+    </div>
+	
+	
+</body>
+</html>

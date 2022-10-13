@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>리뷰작성</title>
+
+   <!-- Customized Bootstrap Style sheet -->
+    
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <meta content="Free HTML Templates" name="keywords">
+    <meta content="Free HTML Templates" name="description">
+
+    <!-- Favicon -->
+    <link href="img/favicon.ico" rel="icon">
+
+    <!-- Google Web Fonts -->
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet"> 
+
+    <!-- Font Awesome -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
+
+    <!-- Libraries Stylesheet -->
+    <link href="lib/owlcarousel/assets/owl.carousel.min.css" rel="stylesheet">
+
+    <!-- Customized Bootstrap Stylesheet -->
+    <link href="css/style.css" rel="stylesheet">
+
+
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.0.1/css/bootstrap.min.css" integrity="sha512-Ez0cGzNzHR1tYAv56860NLspgUGuQw16GiOOp/I2LuTmpSK9xDXlgJz3XN4cnpXWDmkNBKXR/VDMTCnAaEooxA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    
+</head>
+<body>
+    <div class="container-fluid bg-secondary mb-5">
+        <div class="d-flex flex-column align-items-center justify-content-center" style="min-height: 250px;">
+            <h1 class="font-weight-semi-bold text-uppercase mb-3" style="color:white;">리뷰 작성</h1>
+            <div class="d-inline-flex">
+          
+            </div>
+        </div>
+    </div>
+	
+	
+	
+	<form th:action="@{/review}" th:method="post" th:object="${review}">
+		<table class="table table-bordered text-center mb-0" style="width: 50%;" align="center">
+			<tr>
+				<th>상품번호</th>
+				<td><input type="text" th:field="*{item_id}" readonly="readonly" ></td>
+			</tr>
+			<tr>
+				<th padding-top>리뷰</th>
+				<td><textarea cols="50" rows="15" th:field="*{review}"></textarea></td>
+			</tr>
+			<tr>
+				<th>평가</th>
+				<td>
+					<select name="rating" class="form-select" aria-label="Default select example" >
+		                <optgroup>
+		                    <option value="0" th:field="*{rating}" selected>☆☆☆☆☆</option>
+		                    <option value="1" th:field="*{rating}">★☆☆☆☆</option>
+		                    <option value="2" th:field="*{rating}">★★☆☆☆</option>
+		                    <option value="3" th:field="*{rating}">★★★☆☆</option>
+		                    <option value="4" th:field="*{rating}">★★★★☆</option>
+		                    <option value="5" th:field="*{rating}">★★★★★</option>
+		                </optgroup>
+	                </select>
+				</td>
+			</tr>
+		</table>
+		<center>
+                <input type="submit" value="구매완료" class="btn btn-primary btn-block my-3">
+                <input type="button" value="취소" th:onclick="|location.href='/read/${review.item_id}'|" class="btn btn-warning btn-block my-3"> 
+        </center>
+	</form>
+</body>
+</html>

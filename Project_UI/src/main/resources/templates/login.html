@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>의좋은 형제 로그인</title>
+<link href="css/style.css" rel="stylesheet">
+
+</head>
+<body>
+
+	<form th:action="@{/login}" method="post" th:object="${login}">
+		
+			<br><br>
+			<h1 class="h3 mb-3 fw-normal" style="color  : #383838;"><center>의좋은 형제 로그인</center></h1>
+		<div class="container">
+	<div class="col-6 mx-auto">
+		
+			<label class="form-label">아이디</label>
+			<input type="text" th:field="*{member_id}" class="form-control" placeholder="아이디">
+			<br>
+			<label class="form-label">비밀번호</label>
+			<input type="password" th:field="*{member_pw}" class="form-control" placeholder="비밀번호">
+				
+				
+				<br><br>
+				<center>
+				<input type="submit" value="로그인" class="btn btn-primary btn-block my-3" style="width: 25%;" onsubmit="return Check();">
+			
+				<input type="button" value="메인으로" onclick="location.href='/'" class="btn btn-primary btn-block my-3" style="width: 25%;"> 
+		
+				<input type="button" value="회원가입" onclick="location.href='/joinForm'" class="btn btn-primary btn-block my-3" style="width: 25%;">
+				</center>
+		</div>
+		</div>		
+		</form>
+
+
+<script th:inline="javascript">
+//가입폼 확인
+function Check() {
+	let member_id = $('#member_id').val();
+	let member_pw = $('#member_pw').val();
+
+	if (member_id == '') {
+		alert("아이디를 입력하세요");
+		return false;
+	}
+	if (member_pw == '') {
+		alert("비밀번호를");
+		return false;
+	}
+	
+	
+	return true;
+}
+
+</script>		
+	
+          
+</body>
+</html>

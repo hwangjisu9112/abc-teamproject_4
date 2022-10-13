@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>회원 정보 수정</title>
+
+<link href="css/style.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.0.1/css/bootstrap.min.css" integrity="sha512-Ez0cGzNzHR1tYAv56860NLspgUGuQw16GiOOp/I2LuTmpSK9xDXlgJz3XN4cnpXWDmkNBKXR/VDMTCnAaEooxA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    
+</head>
+<body>
+
+	<br><br>
+	<center><h2 class="h3 mb-3 fw-normal" style="color  : #383838;">회원 정보 수정</h2></center>
+	<br><br><br><br>
+	<form th:action="@{/updateMember}" th:method="post" th:object="${updateMember}">
+		
+		<center>		
+		<table class="table table-striped" style="width:50%;">
+			<tr>
+				<th>닉네임</th>
+				<td><input type="text" th:field="*{member_nick}"></td>
+			</tr>
+			<tr>
+				<th>비밀번호</th>
+				<td><input type="password" th:field="*{member_pw}"></td>
+			</tr>
+		
+		</table>
+		<br><br><br>
+		
+		
+		
+               <input type="submit" value="수정하기"  class="btn btn-primary btn-block my-3" style="width: 15%;">
+              <input type="button" value="취소" th:onclick="|location.href='/mypage'|"  class="btn btn-warning btn-block my-3" style="width: 15%;">
+   			
+   
+      </center>
+	</form>
+</body>
+</html>

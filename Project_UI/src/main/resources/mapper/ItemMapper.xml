@@ -1,0 +1,163 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="Project_UI.repository.ItemMapper">
+	<!-- 상품 등록 -->
+	<insert id="insertItem" parameterType="item">
+		insert into ui_item(
+			item_id
+			,seller_id
+			,item_category
+			,item_name
+			,item_status
+			,item_price
+			,item_des
+		) values (
+			item_id_seq.nextval
+			,#{seller_id}
+			,#{item_category}
+			,#{item_name}
+			,#{item_status}
+			,#{item_price}
+			,#{item_des}
+		)
+	</insert>
+	
+	<!-- 상품 이미지 등록 -->
+	<insert id="insertImage" parameterType="image">
+		insert into ui_image(
+			image_id
+			,item_id
+			,image_name_ori
+			,image_name_saved
+		) values ( 
+			image_id_seq.nextval
+			,#{item_id}
+			,#{image_name_ori}
+			,#{image_name_saved}
+		)
+	</insert>
+	
+	<!-- 상품 이미지 등록 취소 -->
+	<delete id="cancelImage" parameterType="image">
+		delete from ui_image where image_id=#{image_id}
+	</delete>
+	
+	<!-- 상품 전체 목록 -->
+	<select id="findAllItem" parameterType="String" resultType="item">
+		select * from ui_item 
+		<where>
+			deal_status = 'newitem'
+			<if test="item_category != null and item_category != ''">
+				item_category = #{item_category}
+			</if>
+		</where>
+		order by item_id
+	</select>
+	
+	<!-- 썸네일 출력 -->
+	<select id="findOneImage" parameterType="long" resultType="image">
+		select * from 
+			(select * from ui_image where item_id=#{item_id} order by image_id)
+		where ROWNUM = 1
+	</select>
+	
+	<!-- 상품 검색후 목록 -->
+	<select id="findSearchItem" parameterType="map" resultType="item">
+		select * from ui_item 
+		<where>
+			<if test="item_category != null and item_category != ''">
+				item_category=#{item_category}
+			</if>
+			<if test="searchWord != null and searchWord != ''">
+				and item_name like '%' || #{searchWord} || '%'
+			</if>
+			and deal_status = 'newitem'
+		</where>
+		order by item_id
+	</select>
+	
+	<!-- 상품 상세 -->
+	<select id="findItem" parameterType="long" resultType="item">
+		select * from ui_item where item_id=#{item_id}
+	</select>
+	
+	<!-- 상품 상세(이미지) -->
+	<select id="findImage" parameterType="long" resultType="Image">
+		select * from ui_image where item_id=#{item_id}
+	</select>
+	
+	
+	<!-- 상품 수정 -->
+	<update id="updateItem" parameterType="item">
+		update ui_item set
+			item_category=#{item_category}
+			,item_name=#{item_name}
+			,item_status=#{item_status}
+			,item_price=#{item_price}
+			,item_des=#{item_des}
+			,item_updatedate=systimestamp
+		where item_id=#{item_id}
+	</update>
+	
+	<!-- 상품 삭제 -->
+	<delete id="deleteItem" parameterType="long">
+		delete ui_item where item_id=#{item_id}
+	</delete>
+	
+	<!-- 상품 구매 -->
+	<update id="purchase" parameterType="item">
+		update ui_item set
+			buyer_id=#{buyer_id}
+			,deal_status='reserved'
+		where item_id=#{item_id}
+	</update>
+	
+	<!-- 상품 구매 취소 -->
+	<update id="purchase_cancel" parameterType="item">
+		update ui_item set
+			buyer_id=null
+			,deal_status='newitem'
+		where item_id=#{item_id}
+	</update>
+	
+	<!-- 관심 상품 등록 -->
+	<insert id="wish" parameterType="wish">
+		insert into ui_wish(
+			wish_id
+			,item_id
+			,buyer_id
+		) values (
+			wish_id_seq.nextval
+			,#{item_id}
+			,#{buyer_id}
+		)
+	</insert>
+	
+	<!-- 판매내역 -->
+	<select id="sellList" resultType="item" parameterType="string">
+		select * from ui_item where seller_id=#{seller_id}
+	</select>
+	
+	<!-- 구매내역 -->
+	<select id="buyList" resultType="item" parameterType="string">
+		select * from ui_item where buyer_id=#{buyer_id}
+	</select>
+	
+	<!-- 리뷰작성 -->
+	<update id="review" parameterType="item">
+		update ui_item set
+			review=#{review}
+			,rating=#{rating}
+			,review_inputdate=systimestamp
+			,deal_status='soldout'
+		where item_id=#{item_id}
+	</update>
+	
+	<!-- 평점 -->
+	<select id="rating" resultType="item" parameterType="string">
+		select * from ui_item where deal_status='soldout' and seller_id=#{seller_id}
+	</select>
+	
+</mapper>
